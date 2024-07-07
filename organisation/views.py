@@ -22,14 +22,14 @@ class UserDetailView(generics.RetrieveAPIView):
     lookup_field = 'userId'
 
     def get_queryset(self):
-        orgId = self.kwargs['userId']
+        userId = self.kwargs['userId']
         try:
-            oid = int(orgId)
+            oid = int(userId)
         except:
-            oid = orgId
+            oid = userId
         if type(oid) ==int:
             queryset = User.objects.filter(
-            Q(orgId=oid) |
+            Q(userId=oid) |
             Q(pk=oid))
         else:
             queryset = User.objects.filter(userId=oid)
@@ -54,8 +54,10 @@ class UserDetailView(generics.RetrieveAPIView):
                     }
                 },status=status.HTTP_200_OK)
 
-
-        # return super().get(request, *args, **kwargs)
+        return Response({
+                "status": "error",
+                "message": "invalid id",
+                },status=status.HTTP_400_BAD_REQUEST)
 
 
 
