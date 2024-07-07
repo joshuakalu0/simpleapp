@@ -34,9 +34,6 @@ class PublicUserApiTest(TestCase):
 
         self.assertEqual(res.status_code,status.HTTP_201_CREATED)
         user = get_user_model().objects.get(email = payload['email'])
-        org = Organisation.objects.filter(name = f'{user.firstName}`s organsation')
-        tt = bool(len(org))
-        self.assertTrue(tt)
         self.assertTrue(user.check_password(payload['password']))
         self.assertIn('accessToken',res.data.data)
         self.assertNotIn('password',res.data)

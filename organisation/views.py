@@ -23,6 +23,7 @@ class UserDetailView(generics.RetrieveAPIView):
 
     def get_queryset(self):
         userId = self.kwargs['userId']
+        print(userId)
         try:
             oid = int(userId)
         except:
@@ -34,8 +35,10 @@ class UserDetailView(generics.RetrieveAPIView):
         else:
             queryset = User.objects.filter(userId=oid)
 
+        return queryset
+
     def get(self, request, *args, **kwargs):
-        userId = kwargs['userId']
+
 
         user = self.get_queryset()
         if user:
@@ -75,7 +78,7 @@ class Orglistview(generics.ListCreateAPIView):
             print(orgs)
             return Response({
                 "status": "success",
-                "message": "<message>",
+                "message": "here are your organisations",
                 "data": {"organisations": orgs
 
                     }
@@ -83,16 +86,16 @@ class Orglistview(generics.ListCreateAPIView):
 
         else:
             return Response({
-                 "status": "Bad Request",
-                 "message": "Client error",
-                 "statusCode": 400
+                 "status": "success",
+                 "message": "you are in no organisation",
+                },status=status.HTTP_204_NO_CONTENT)
 
 
+
+        return Response({
+                "status": "error",
+                "message": "invalid id",
                 },status=status.HTTP_400_BAD_REQUEST)
-
-
-
-        return super().get(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
         org = Organisation.objects.create(
@@ -165,7 +168,7 @@ class addOrgDetailView(generics.RetrieveAPIView):
     queryset = Organisation.objects.all()
 
     def get_queryset(self):
-        orgId = self.kwargs['orgid']
+        orgId = self.kwargs['orgId']
         try:
             oid = int(orgId)
         except:
@@ -177,9 +180,10 @@ class addOrgDetailView(generics.RetrieveAPIView):
         else:
             queryset = Organisation.objects.filter(orgId=oid)
 
+        return queryset
+
 
     def get(self, request, *args, **kwargs):
-        orgId = kwargs['orgId']
 
         orgs = self.get_queryset()
         request.user.organisation.add(orgs[0])
