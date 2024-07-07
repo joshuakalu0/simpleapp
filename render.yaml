@@ -1,0 +1,22 @@
+databases:
+  - name: mini2
+    plan: free
+    databaseName: mini2
+    user: avnadmin
+
+services:
+  - type: web
+    plan: free
+    name: simpleapp
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "python -m gunicorn simpleapp.asgi:application -k uvicorn.workers.UvicornWorker"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mysitedb
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
