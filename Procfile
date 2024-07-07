@@ -1,1 +1,1 @@
-web: gunicorn mini2.asgi:application -k uvicorn.workers.UvicornWorker
+web: gunicorn simpleapp.asgi:application -k uvicorn.workers.UvicornWorker
