@@ -1,19 +1,16 @@
 
 from rest_framework import status
-from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from userauth.models import User
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.db.models import Q
 
 
 # Serializers
-from userauth.serializer import MyTokenObtainPairSerializer,UserSerializer,RegisterSerializer
+from userauth.serializer import UserSerializer
 from organisation.serializer import OrgSerializer
 from organisation.models  import Organisation
 

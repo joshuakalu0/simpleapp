@@ -1,13 +1,9 @@
 
 from rest_framework import status
-from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from userauth.models import User
-from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 
@@ -16,14 +12,14 @@ from django.contrib.auth import authenticate
 
 
 # Serializers
-from userauth.serializer import MyTokenObtainPairSerializer,UserSerializer,RegisterSerializer,UserLoginSerializer
+from userauth.serializer import RegisterSerializer,UserLoginSerializer
 
-from organisation.models  import Organisation
 
 
 
 class MyTokenObtainPairView(generics.CreateAPIView):
     serializer_class = UserLoginSerializer
+    permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
         email = request.data['email']
@@ -58,9 +54,8 @@ class MyTokenObtainPairView(generics.CreateAPIView):
 
 
 class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer
+    permission_classes = (AllowAny,)
 
 
     def post(self, request, *args, **kwargs):
