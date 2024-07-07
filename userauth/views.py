@@ -59,6 +59,20 @@ class RegisterView(generics.CreateAPIView):
 
 
     def post(self, request, *args, **kwargs):
+        userexist = User.objects.filter(email=request.data['email'])
+        if userexist:
+               return Response({
+            "status": "Bad request",
+            "message": "Registration unsuccessful",
+            "statusCode": 422
+            },status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+        if not request.data['email'] or not request.data['password'] or not request.data['firstName'] or not request.data['lastName'] or not request.data['phone']:
+            return Response({
+            "status": "Bad request",
+            "message": "Registration unsuccessful",
+            "statusCode": 422
+            },status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         statu =  self.create(request, *args, **kwargs)
         if statu.status_code == 201:
             user = User.objects.get(email = request.data['email'])
@@ -79,10 +93,13 @@ class RegisterView(generics.CreateAPIView):
                 },status=status.HTTP_201_CREATED)
 
 
+
+
+
         return Response({
             "status": "Bad request",
             "message": "Registration unsuccessful",
-            "statusCode": 400
+            "statusCode": 422
             },status=status.HTTP_400_BAD_REQUEST)
 
 

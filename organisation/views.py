@@ -32,7 +32,7 @@ class UserDetailView(generics.RetrieveAPIView):
             Q(orgId=oid) |
             Q(pk=oid))
         else:
-            queryset = User.objects.filter(orgId=oid)
+            queryset = User.objects.filter(userId=oid)
 
     def get(self, request, *args, **kwargs):
         userId = kwargs['userId']
