@@ -91,7 +91,7 @@ DATABASES = {
         'ENGINE':  'django.db.backends.postgresql',
         'NAME':'mini2',
         'USER': 'avnadmin',
-        'PASSWORD': print(env('DATABASE_PASSWORD')),
+        'PASSWORD':env('DATABASE_PASSWORD'),
         'HOST': 'pg-4a2e037-ajujoshua2019-4693.k.aivencloud.com',
         'PORT': '11436',
     }
