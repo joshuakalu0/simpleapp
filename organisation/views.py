@@ -124,6 +124,8 @@ class Orglistview(generics.ListCreateAPIView):
 
 class OrgDetailView(generics.RetrieveAPIView):
     serializer_class = OrgSerializer
+    permission_classes = (IsAuthenticated,)
+    authentication_classes =(JWTAuthentication,)
     # queryset = Organisation.objects.all()
     # lookup_field ='orgId'
 
@@ -166,6 +168,8 @@ class OrgDetailView(generics.RetrieveAPIView):
 class addOrgDetailView(generics.RetrieveAPIView):
     serializer_class = OrgSerializer
     queryset = Organisation.objects.all()
+    permission_classes = (IsAuthenticated,)
+    authentication_classes =(JWTAuthentication,)
 
     def get_queryset(self):
         orgId = self.kwargs['orgId']
